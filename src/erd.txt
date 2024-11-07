@@ -1,0 +1,39 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+Table users {
+  id integer [primary key]
+  avatar_img varchar [null]
+  firstname varchar
+  lastname varchar
+  email varchar [unique]
+  date_of_birth timestamp
+  password varchar
+  created_at timestamp
+}
+
+table categories {
+  id integer [primary key]
+  name varchar [unique]
+  description text
+  user_id integer
+}
+
+table cars {
+  id integer [primary key]
+  model varchar
+  make varchar
+  year integer
+  description text [null]
+  transmission varchar
+  seat_capacity integer
+  color varchar
+  registration_number varchar
+  category_id integer
+  user_id integer
+}
+
+Ref: categories.id < cars.category_id
+Ref: users.id < cars.user_id
+Ref: users.id < categories.user_id
