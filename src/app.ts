@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
-import { HttpError } from "http-errors";
+import { HttpError, Forbidden } from "http-errors";
 import path from "path";
 import { logError } from "./services/loggingService";
 import authRouter from "./routes/authRoute";
@@ -11,22 +11,22 @@ const app = express();
 // setting up middlewares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(responseMiddleware);
 
-const allowedOrigins = ["http://localhost:3000"];
 app.use(
   cors({
     origin(requestOrigin, callback) {
+      const allowedOrigins = ["http://localhost:3000"];
+
       if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
         return callback(null, true);
       } else {
-        logError("Unauthorized origin", "Unauthorized origin", requestOrigin);
-        callback(new Error("Origin not allowed"));
+        logError("CORS error! Access denied.", "CORS error! Access denied.", requestOrigin);
+        callback(Forbidden("CORS error! Access denied."));
       }
     },
   })
 );
-
-app.use(responseMiddleware);
 
 // Routes
 app.use("/api/auth", authRouter);
