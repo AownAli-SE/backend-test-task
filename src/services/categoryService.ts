@@ -7,6 +7,14 @@ import { UserJWTPayloadDto } from "../dtos/userDtos";
 export const getCategories = () => {
   return Category.aggregate([
     { $match: {} },
+    // {
+    //   $lookup: {
+    //     from: "Car",
+    //     localField: "_id",
+    //     foreignField: "categoryId",
+    //     as: "cars",
+    //   },
+    // },
     {
       $facet: {
         totalCount: [{ $count: "total" }],
@@ -24,7 +32,8 @@ export const getCategories = () => {
 };
 
 export const getCategory = async (id: string) => {
-  const category = await Category.findById(id);
+  const query = Category.findById(id).populate("cars");
+  const category = await query;
   if (!category) throw NotFound(`Category with id ${id} does not exist`);
   return category;
 };
