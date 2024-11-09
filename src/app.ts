@@ -2,9 +2,14 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { HttpError, Forbidden } from "http-errors";
 import path from "path";
+
 import { logError } from "./services/loggingService";
-import authRouter from "./routes/authRoute";
 import { responseMiddleware } from "./middlewares/responseMiddleware";
+import { authMiddleware } from "./middlewares/authMiddleware";
+
+import authRouter from "./routes/authRoute";
+import categoryRouter from "./routes/categoryRoutes";
+import carRouter from "./routes/carRoute";
 
 const app = express();
 
@@ -30,6 +35,8 @@ app.use(
 
 // Routes
 app.use("/api/auth", authRouter);
+app.use("/api/categories", authMiddleware, categoryRouter);
+app.use("/api/cars", authMiddleware, carRouter);
 
 // Express error middleware
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {

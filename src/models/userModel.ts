@@ -2,9 +2,10 @@ import { Schema, model } from "mongoose";
 import { hash } from "argon2";
 import { BadRequest, InternalServerError } from "http-errors";
 import { logInfo } from "../services/loggingService";
+import { UserDto } from "../dtos/signupDto";
 
 // Defining user schema
-const schema = new Schema(
+const schema = new Schema<UserDto>(
   {
     firstname: {
       type: String,

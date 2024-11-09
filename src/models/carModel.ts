@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import { logInfo } from "../services/loggingService";
 
 // Defining car schema
 const schema = new Schema(
@@ -62,17 +61,11 @@ const schema = new Schema(
       match: [/^[A-Za-z0-9-\s]+$/, "Only alphabets, numbers and '-' are allowed"],
     },
 
-    categoryId: { type: Schema.Types.ObjectId, ref: "Category" },
-    userId: { type: Schema.Types.ObjectId, ref: "User" },
+    categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: [true, "Car category is required"] },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: [true, "Unauthorized request"] },
   },
   { timestamps: true }
 );
-
-// Post-save hook: Logging success response
-schema.post("save", function (doc, next) {
-  logInfo("Car record added successfully", doc);
-  next();
-});
 
 // Creating Car model
 export const Car = model("Car", schema);
