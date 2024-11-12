@@ -10,8 +10,20 @@ import {
 
 // get all categories route handler
 export const getAllCategories = catchError(async (req: Request, res: Response, next: NextFunction) => {
-  const result = await getCategories();
-  res.success(200, "Categories fetched successfully", result[0]);
+  const { page, limit, selfCreated } = req.query as { page: string; limit: string; selfCreated: string };
+  const currentPage = page && !isNaN(parseInt(page)) ? parseInt(page) : 1;
+  const pageLimit = limit && !isNaN(parseInt(limit)) ? parseInt(limit) : 10;
+  const isSelfCreated = !!selfCreated;
+
+  let result = await getCategories(req.user.id, currentPage, pageLimit, isSelfCreated);
+  const responseData = {
+    categories: result.length ? result[0].categories : [],
+    totalCount: result.length ? result[0].totalCount : 0,
+    page: currentPage,
+    pageSize: pageLimit,
+  };
+
+  res.success(200, "Categories fetched successfully", responseData);
 });
 
 // get category by id route handler
@@ -35,6 +47,6 @@ export const updateCategory = catchError(async (req: Request, res: Response, nex
 
 // delete category by id route handler
 export const deleteCategory = catchError(async (req: Request, res: Response, next: NextFunction) => {
-  await deleteCategoryById(req.params.id);
+  await deleteCategoryById(req.params.id, req.user.id);
   res.success(204, "Category deleted successfully", null);
 });

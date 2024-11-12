@@ -23,13 +23,15 @@ const transporter = createTransport({
 });
 
 // Sending email handler
-export const sendWelcomeEmail = async (recipientEmail: string, password: string) => {
+export const sendEmail = async (recipientEmail: string, password: string, subject: string = "", html: string = "") => {
   const options = {
     from: "test@task.com",
     to: recipientEmail,
-    subject: "Welcome Email",
+    subject: subject || "Welcome Email",
     text: "Your account has been successfully created. Please use password attached to thie email to login.",
-    html: `<p>Your account has been successfully created. Please use the password provided below to log in.</p><br/><p>Your password: <strong>${password}</strong></p>`,
+    html:
+      html ||
+      `<p>Your account has been successfully created. Please use the password provided below to log in.</p><br/><p>Your password: <strong>${password}</strong></p>`,
   };
 
   try {

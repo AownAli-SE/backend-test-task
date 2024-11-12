@@ -10,18 +10,20 @@ import { authMiddleware } from "./middlewares/authMiddleware";
 import authRouter from "./routes/authRoute";
 import categoryRouter from "./routes/categoryRoutes";
 import carRouter from "./routes/carRoute";
+import helmet from "helmet";
 
 const app = express();
 
 // setting up middlewares
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(helmet());
 app.use(responseMiddleware);
 
 app.use(
   cors({
     origin(requestOrigin, callback) {
-      const allowedOrigins = ["http://localhost:3000"];
+      const allowedOrigins = ["http://localhost:5173"];
 
       if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
         return callback(null, true);
@@ -30,6 +32,7 @@ app.use(
         callback(Forbidden("CORS error! Access denied."));
       }
     },
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 

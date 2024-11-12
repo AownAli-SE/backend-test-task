@@ -12,7 +12,7 @@ const schema = new Schema<UserDto>(
       required: [true, "Firstname is required"],
       trim: true,
       minLength: [2, "Firstname must have atleast 2 characters"],
-      maxLength: [20, "Firstname can have atmost 20 characters"],
+      maxLength: [30, "Firstname can have atmost 20 characters"],
       match: [/^[A-Za-z\s]+$/, "Only alphabets are allowed"],
     },
     lastname: {
@@ -20,7 +20,7 @@ const schema = new Schema<UserDto>(
       required: [true, "Lastname is required"],
       trim: true,
       minLength: [2, "Lastname must have atleast 2 characters"],
-      maxLength: [20, "Lastname can have atmost 20 characters"],
+      maxLength: [30, "Lastname can have atmost 20 characters"],
       match: [/^[A-Za-z\s]+$/, "Only alphabets are allowed"],
     },
     email: {
@@ -35,13 +35,7 @@ const schema = new Schema<UserDto>(
       required: [true, "Password is required"],
       trim: true,
       minLength: [6, "Password must have atleast 6 characters"],
-      maxLength: [20, "Password can have atmost 20 characters"],
       match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_-]).{8,}$/, "Password is not strong enough"],
-    },
-    profileImage: {
-      type: String,
-      required: false,
-      trim: true,
     },
     dateOfBirth: {
       type: Date,
@@ -58,6 +52,8 @@ const schema = new Schema<UserDto>(
 
 // Pre-save hook: Hashing password before saving document to database
 schema.pre("save", async function (next) {
+  if (!this.isNew) next();
+
   try {
     // Checking for email existence
     const user = await this.model("User").findOne({ email: this.email });

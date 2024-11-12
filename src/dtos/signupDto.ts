@@ -7,7 +7,6 @@ export interface UserDto {
   dateOfBirth: string | Date;
   email: string;
   password: string;
-  profileImage: string;
   categories: any;
   cars: any;
 }
