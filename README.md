@@ -24,13 +24,13 @@ Node version >= 20.x.x
 NPM version >= 10.7.x
 Yarn version >= 1.22.x
 
-Step 1: Install Node.js, NPM and Yarn in your system.
-Step 2: Clone the repo from https://github.com/AownAli-SE/backend-test-task
-Step 3: Install dependencies by executing command: yarn install
-Step 4: Install and start MongoDB server. You can use any MongoDB client (Atlas, shell or Compass)
-Step 5: Create an env file with the name: .env.development or copy .env.example file and rename it
-Step 6: Define all variables in .env.development file according to the .env.example file
-Step 4: Run project by executing command: yarn dev
+1. Install Node.js, NPM and Yarn in your system.
+2. Clone the repo from https://github.com/AownAli-SE/backend-test-task
+3. Install dependencies by executing command: yarn install
+4. Install and start MongoDB server. You can use any MongoDB client (Atlas, shell or Compass)
+5. Create an env file with the name: .env.development or copy .env.example file and rename it
+6. Define all variables in .env.development file according to the .env.example file
+7. Run project by executing command: yarn dev
 
 ### Important Packages Used
 
