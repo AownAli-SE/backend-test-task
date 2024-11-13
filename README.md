@@ -20,9 +20,9 @@ Nodemailer is use to send mails like welcome email on account creation and reset
 
 ### Project Startup
 
-Node version >= 20.x.x
-NPM version >= 10.7.x
-Yarn version >= 1.22.x
+- Node version >= 20.x.x
+- NPM version >= 10.7.x
+- Yarn version >= 1.22.x
 
 1. Install Node.js, NPM and Yarn in your system.
 2. Clone the repo from https://github.com/AownAli-SE/backend-test-task
