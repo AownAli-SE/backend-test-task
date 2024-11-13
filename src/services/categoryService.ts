@@ -91,7 +91,8 @@ export const deleteCategoryById = async (categoryId: string, userId: string) => 
 
   if (deletedRecord) {
     const userRecord = await User.findById(userId);
-    userRecord!.categories = userRecord?.categories.filter((id: string) => id !== categoryId);
+    userRecord!.categories = userRecord?.categories.filter((id: string) => id.toString() !== categoryId);
+    console.log(userRecord?.categories);
     await userRecord?.save();
 
     await Car.deleteMany({ categoryId: categoryId });

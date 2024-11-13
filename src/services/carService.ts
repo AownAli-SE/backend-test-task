@@ -5,6 +5,7 @@ import { Car } from "../models/carModel";
 import { CreateOrUpdateCarDto } from "../dtos/carDto";
 import { Category } from "../models/categoryModel";
 import { User } from "../models/userModel";
+import { Types } from "mongoose";
 
 // Get all cars
 export const getCars = (userId: string, currentPage: number, pageLimit: number, selfCreated: boolean) => {
@@ -84,11 +85,11 @@ export const deleteCarById = async (carId: string) => {
 
   if (deletedRecord) {
     const category = await Category.findById(deletedRecord.categoryId);
-    category!.cars = category!.cars.filter((car) => car !== deletedRecord._id);
+    category!.cars = category!.cars.filter((car) => car.toString() !== deletedRecord._id.toString());
     await category?.save();
 
     const userDoc = await User.findById(deletedRecord.userId);
-    userDoc!.cars = userDoc!.cars.push(deletedRecord.userId);
+    userDoc!.cars = userDoc!.cars.filter((car: Types.ObjectId) => car.toString() !== deletedRecord._id.toString());
     await userDoc?.save();
   }
 
