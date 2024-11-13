@@ -18,7 +18,8 @@ For error handling 'http-errors' package is used and for validation, Mongoose bu
 
 Nodemailer is use to send mails like welcome email on account creation and resetting passwords.
 
-###Project Startup
+### Project Startup
+
 Node version >= 20.x.x
 NPM version >= 10.7.x
 Yarn version >= 1.22.x
